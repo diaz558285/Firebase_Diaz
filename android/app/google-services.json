@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "865540068516",
+    "project_id": "diaz-4c860",
+    "storage_bucket": "diaz-4c860.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865540068516:android:97ff3f9200d1168f6a4231",
+        "android_client_info": {
+          "package_name": "com.example.firebase_diaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865540068516-d7ot409f4iinkh7rk0e1jp72mlg414m6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAchAuvZtkXOMT4AHI9JtfenWJ6NXwgT80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865540068516-d7ot409f4iinkh7rk0e1jp72mlg414m6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "865540068516-g2r5j4idkf1dkrqcahdlo9oonmqh003a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.firebaseDiaz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
