@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -15,28 +17,61 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
   bool loading = false;
+  bool obscurePassword = true;
 
   Future<void> forgotPassword() async {
-    if (emailCtrl.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter your email address.")),
-      );
-      return;
-    }
-
-    try {
-      await auth.resetPassword(emailCtrl.text.trim());
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset email sent. Check your inbox."),
+    showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        title: const Text("Forgot Password?"),
+        content: TextField(
+          controller: emailCtrl,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            labelText: "Email",
+            border: OutlineInputBorder(),
+          ),
         ),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to send password reset email.")),
-      );
-    }
+        actions: [
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          ElevatedButton(
+            child: Text("Send Reset Link"),
+            onPressed: () async {
+              if (emailCtrl.text.trim().isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Please enter your email address."),
+                  ),
+                );
+                return;
+              }
+
+              try {
+                await auth.resetPassword(emailCtrl.text.trim());
+                Navigator.pop(context);
+                ScaffoldMessenger.of(this.context).showSnackBar(
+                  SnackBar(
+                    content: Text("Password reset email sent. Check your inbox.")
+                  ),
+                );
+              } catch (e) {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(this.context).showSnackBar(
+                  SnackBar(
+                    content: Text("Failed to send password reset email.")
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+      )
+    );
   }
 
   @override
@@ -67,18 +102,27 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 12),
               TextField(
                 controller: passwordCtrl,
-                obscureText: true,
+                obscureText: obscurePassword,
                 decoration: InputDecoration(
                   labelText: "Password",
                   border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword = !obscurePassword;
+                      });
+                    }, 
+                  ),
                 ),
               ),
 
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  child: Text("Forgot Password?"),
                   onPressed: forgotPassword,
+                  child: Text("Forgot Password?"),
                 ),
               ),
 

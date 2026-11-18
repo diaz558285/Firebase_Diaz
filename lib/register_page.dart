@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
     _RegisterPageState createState() => _RegisterPageState();
 }
@@ -13,6 +15,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
   bool loading = false;
+  bool obscurePassword = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +38,19 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 12),
               TextField(
                 controller: passwordCtrl,
-                obscureText: true,
+                obscureText: obscurePassword,
                 decoration: InputDecoration(
                   labelText: "Password",
                   border: OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword = !obscurePassword;
+                      });
+                    }, 
+                  ),
                 ),
               ),
               SizedBox(height: 12),
